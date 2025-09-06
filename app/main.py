@@ -1,0 +1,67 @@
+import os
+import logging
+from typing import Dict, Any
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from app.routers import health
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="EDD Cloud Run Backend Resource API",
+    description="Employment Development Department backend resource for hackathon 2025",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(health.router, prefix="/api/v1")
+
+@app.get("/")
+async def root() -> Dict[str, str]:
+    return {
+        "message": "EDD Cloud Run Backend Resource API",
+        "version": "1.0.0",
+        "status": "running"
+    }
+
+@app.get("/api/v1/info")
+async def get_api_info() -> Dict[str, Any]:
+    return {
+        "api_name": "EDD Cloud Run Backend Resource API",
+        "version": "1.0.0",
+        "description": "Employment Development Department backend resource for hackathon 2025",
+        "endpoints": {
+            "root": "/",
+            "health": "/api/v1/health",
+            "info": "/api/v1/info",
+            "docs": "/docs",
+            "redoc": "/redoc"
+        }
+    }
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    logger.error(f"Global exception handler: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"}
+    )
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8080))
+    logger.info(f"Starting server on port {port}")
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=True)
