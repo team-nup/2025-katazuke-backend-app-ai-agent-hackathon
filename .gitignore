@@ -95,7 +95,6 @@ celerybeat.pid
 *.sage.py
 
 # Environment files (exclude all .env variants for security)
-.env*
 .env
 .env.local
 .env.*.local
@@ -104,6 +103,8 @@ celerybeat.pid
 .env.staging
 .env.template
 .env.sample
+# Allow .env.example for public repositories
+!.env.example
 
 # Python virtual environments
 .venv
@@ -150,6 +151,9 @@ Thumbs.db
 .gcloud/
 *.json
 !*.template.json
+
+# Claude
+CLAUDE.md
 
 # Local development
 logs/

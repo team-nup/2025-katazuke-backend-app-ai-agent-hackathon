@@ -15,7 +15,7 @@ if [ -f .env ]; then
 fi
 
 # Default values (can be overridden by .env file)
-DEFAULT_PROJECT_ID=${PROJECT_ID:-"your-gcp-project-id"}
+DEFAULT_PROJECT_ID=${PROJECT_ID:-""}
 DEFAULT_REGION=${REGION:-"us-central1"}
 DEFAULT_SERVICE_NAME=${SERVICE_NAME:-"edd-backend-resource"}
 DEFAULT_REPO_NAME=${REPO_NAME:-"edd-hackathon-repo"}
@@ -46,6 +46,18 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
+
+# Validate required parameters
+if [ -z "$PROJECT_ID" ] || [ "$PROJECT_ID" = "" ]; then
+    echo -e "${RED}Error: PROJECT_ID is required${NC}"
+    echo "Please set PROJECT_ID in .env file or pass as first argument"
+    echo "Usage: ./deploy.sh [PROJECT_ID] [REGION] [SERVICE_NAME]"
+    echo ""
+    echo "Or create .env file:"
+    echo "cp .env.example .env"
+    echo "# Edit .env with your project settings"
+    exit 1
+fi
 
 echo -e "${BLUE}=== EDD Cloud Run Backend Resource Deployment ===${NC}"
 echo "Project ID: $PROJECT_ID"
@@ -118,7 +130,7 @@ gcloud run deploy $SERVICE_NAME \
     --min-instances $MIN_INSTANCES \
     --timeout $TIMEOUT \
     --concurrency $CONCURRENCY \
-    --set-env-vars "PYTHON_VERSION=3.11"
+    --set-env-vars "PYTHON_VERSION=3.12"
 
 # Get the service URL
 SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --format="value(status.url)")

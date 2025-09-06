@@ -28,12 +28,9 @@ Employment Development Department backend resource for hackathon 2025 - A FastAP
 ├── Dockerfile              # コンテナイメージ定義
 ├── .dockerignore           # Docker無視ファイル
 ├── .gitignore              # Git無視ファイル
-├── .env.template           # 環境変数テンプレート
-├── .env.sample             # 環境変数サンプル
+├── .env.example            # 環境変数テンプレート
 ├── deploy.sh               # Cloud Runデプロイスクリプト
-├── local-test.sh           # ローカルテストスクリプト
-├── README.md               # このファイル
-└── CLAUDE.md               # Claude Code用設定ファイル
+└── README.md               # このファイル
 ```
 
 ## 🔧 ローカル開発
@@ -41,27 +38,10 @@ Employment Development Department backend resource for hackathon 2025 - A FastAP
 ### 前提条件
 
 - Docker
-- Python 3.11+（ローカル開発の場合）
+- Python 3.12+（ローカル開発の場合）
 - Google Cloud SDK（デプロイの場合）
 
 ### ローカルでの実行
-
-#### 方法1: Docker使用（推奨）
-
-```bash
-# ビルド、実行、テストを一括で実行
-./local-test.sh
-
-# 個別コマンド
-./local-test.sh build   # Dockerイメージをビルド
-./local-test.sh run     # コンテナを実行
-./local-test.sh test    # APIエンドポイントをテスト
-./local-test.sh stop    # コンテナを停止
-./local-test.sh clean   # クリーンアップ
-./local-test.sh logs    # ログを表示
-```
-
-#### 方法2: Python直接実行
 
 ```bash
 # 仮想環境を作成
@@ -103,8 +83,8 @@ python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 環境設定を管理するために`.env`ファイルを使用できます：
 
 ```bash
-# .env.templateをコピーして設定
-cp .env.template .env
+# .env.exampleをコピーして設定
+cp .env.example .env
 
 # .envファイルを編集してあなたの設定を入力
 # 最低限PROJECT_IDは設定してください
@@ -112,9 +92,9 @@ cp .env.template .env
 
 `.env`ファイルの例：
 ```bash
-PROJECT_ID=my-edd-hackathon-project-123
+PROJECT_ID=your-actual-project-id
 REGION=us-central1
-SERVICE_NAME=edd-backend-resource
+SERVICE_NAME=your-service-name
 MEMORY=2Gi
 CPU=2
 MAX_INSTANCES=20
@@ -124,7 +104,7 @@ MAX_INSTANCES=20
 
 ```bash
 # 方法1: .envファイルを使用（推奨）
-cp .env.template .env
+cp .env.example .env
 # .envを編集後
 ./deploy.sh
 
@@ -153,11 +133,11 @@ Cloud Runでは以下の環境変数が設定されます：
 ## 🧪 テスト
 
 ```bash
-# ローカルテストスクリプトでAPIをテスト
-./local-test.sh test
-
-# または手動でcurlを使用
+# 手動でcurlを使用
 curl http://localhost:8080/api/v1/health/
+
+# デプロイ後のテスト
+curl https://YOUR-SERVICE-URL/api/v1/health/
 ```
 
 ## 📚 開発ガイド
@@ -175,25 +155,6 @@ curl http://localhost:8080/api/v1/health/
 2. Dockerイメージを再ビルド
 3. テストとデプロイ
 
-## 🔒 セキュリティ
-
-- 非rootユーザーでコンテナを実行
-- マルチステージDockerビルド
-- 最小限のベースイメージ使用
-- 機密情報の環境変数管理
-
-## 🤝 貢献
-
-1. このリポジトリをフォーク
-2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
-4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. プルリクエストを作成
-
 ## 📄 ライセンス
 
 このプロジェクトは2025年EDDハッカソン用です。
-
-## 📞 サポート
-
-問題や質問がある場合は、GitHubのIssuesを使用してください。

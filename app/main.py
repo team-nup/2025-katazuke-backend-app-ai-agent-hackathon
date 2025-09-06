@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.routers import health
+from app.api.routers import health, vision
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -28,6 +28,7 @@ app.add_middleware(
 )
 
 app.include_router(health.router, prefix="/api/v1")
+app.include_router(vision.router)
 
 @app.get("/")
 async def root() -> Dict[str, str]:
@@ -47,6 +48,8 @@ async def get_api_info() -> Dict[str, Any]:
             "root": "/",
             "health": "/api/v1/health",
             "info": "/api/v1/info",
+            "vision_web_detection": "/api/v1/vision/web-detection",
+            "vision_health": "/api/v1/vision/health",
             "docs": "/docs",
             "redoc": "/redoc"
         }
