@@ -21,9 +21,14 @@ Employment Development Department backend resource for hackathon 2025 - A FastAP
 ├── app/
 │   ├── __init__.py
 │   ├── main.py              # FastAPIメインアプリケーション
-│   └── routers/
-│       ├── __init__.py
-│       └── health.py        # ヘルスチェックエンドポイント
+│   ├── api/
+│   │   └── routers/
+│   │       ├── health.py    # ヘルスチェックエンドポイント
+│   │       └── vision.py    # Vision APIエンドポイント
+│   ├── services/
+│   │   └── vision_service.py # Vision APIビジネスロジック
+│   └── models/
+│       └── vision.py        # データモデル
 ├── requirements.txt         # Python依存関係
 ├── Dockerfile              # コンテナイメージ定義
 ├── .dockerignore           # Docker無視ファイル
@@ -57,18 +62,9 @@ pip install -r requirements.txt
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
-### APIエンドポイント
+### APIドキュメント
 
-アプリケーションが起動したら、以下のエンドポイントにアクセスできます：
-
-- **ルート**: http://localhost:8080/
-- **API情報**: http://localhost:8080/api/v1/info
-- **ヘルスチェック**: http://localhost:8080/api/v1/health/
-- **Liveness Probe**: http://localhost:8080/api/v1/health/liveness
-- **Readiness Probe**: http://localhost:8080/api/v1/health/readiness
-- **詳細ヘルス**: http://localhost:8080/api/v1/health/detailed
 - **API Documentation**: http://localhost:8080/docs
-- **ReDoc Documentation**: http://localhost:8080/redoc
 
 ## ☁️ Cloud Runへのデプロイ
 
@@ -155,6 +151,3 @@ curl https://YOUR-SERVICE-URL/api/v1/health/
 2. Dockerイメージを再ビルド
 3. テストとデプロイ
 
-## 📄 ライセンス
-
-このプロジェクトは2025年EDDハッカソン用です。
