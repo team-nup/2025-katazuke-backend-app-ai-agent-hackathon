@@ -79,7 +79,7 @@ async def analyze_image(file: UploadFile, prompt: str) -> GeminiAnalyzeResponse:
             model="gemini-2.5-pro",
             contents=[
                 types.Content(
-                    role="user", parts=[types.Part.from_text(prompt), image_part]
+                    role="user", parts=[types.Part.from_text(text=prompt), image_part]
                 )
             ],
         )
