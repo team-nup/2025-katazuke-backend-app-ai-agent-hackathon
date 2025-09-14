@@ -165,3 +165,6 @@ tmp/
 
 # Temporary files
 =*
+
+# Deployment scripts with sensitive information
+deploy.sh
