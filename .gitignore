@@ -168,3 +168,19 @@ tmp/
 
 # Deployment scripts with sensitive information
 deploy.sh
+
+# Test images and sensitive files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.webp
+# Allow example images in docs
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.jpeg
+
+# Team documentation (keep local only)
+API_USAGE.md
