@@ -152,10 +152,16 @@ Thumbs.db
 *.json
 !*.template.json
 
-# Claude
-CLAUDE.md
+# Ruff
+.ruff_cache/
+
+# UV
+uv.lock
 
 # Local development
 logs/
 temp/
 tmp/
+
+# Temporary files
+=*
