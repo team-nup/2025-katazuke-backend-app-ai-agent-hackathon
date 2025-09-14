@@ -130,7 +130,7 @@ gcloud run deploy $SERVICE_NAME \
     --min-instances $MIN_INSTANCES \
     --timeout $TIMEOUT \
     --concurrency $CONCURRENCY \
-    --set-env-vars "PYTHON_VERSION=3.12"
+    --set-env-vars "PYTHON_VERSION=3.12,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,VERTEX_AI_LOCATION=$VERTEX_AI_LOCATION"
 
 # Get the service URL
 SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --format="value(status.url)")
