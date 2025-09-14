@@ -1,0 +1,120 @@
+[project]
+name = "edd-gcloud-backend-resource"
+version = "1.0.0"
+description = "Employment Development Department backend resource for hackathon 2025"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]==0.24.0",
+    "python-multipart==0.0.6",
+    "python-jose[cryptography]==3.3.0",
+    "passlib[bcrypt]==1.7.4",
+    "python-dotenv==1.0.0",
+    "pydantic==2.5.0",
+    "httpx>=0.28.1",
+    "google-cloud-vision>=3.4.5",
+    "google-genai>=1.36.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6.0",
+]
+
+[tool.ruff]
+# Python version
+target-version = "py311"
+
+# Line length
+line-length = 88
+
+# Include and exclude paths
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.lint]
+# Enable rules
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings (includes W292 for final newline)
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "ARG",   # flake8-unused-arguments
+    "SIM",   # flake8-simplify
+    "TCH",   # flake8-type-checking
+    "PTH",   # flake8-use-pathlib
+    "ERA",   # flake8-eradicate
+    "PL",    # pylint
+    "RUF",   # ruff specific rules
+    "S",     # flake8-bandit (security)
+]
+
+# Disable specific rules
+ignore = [
+    "E501",     # line too long (handled by formatter)
+    "B008",     # do not perform function calls in argument defaults
+    "PLR0913",  # too many arguments
+    "ARG002",   # unused method argument
+    "RUF002",   # docstring contains ambiguous unicode (Japanese characters)
+    "RUF003",   # comment contains ambiguous unicode (Japanese characters)
+    "TCH003",   # move standard library import into TYPE_CHECKING block
+]
+
+# Allow autofix for specific rules
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.mccabe]
+# Max complexity
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+# Import sorting
+known-first-party = ["app"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.format]
+# Formatting options
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+    "ruff>=0.13.0",
+]

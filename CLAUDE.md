@@ -24,6 +24,17 @@ pip install -r requirements.txt
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
+### UV Development (Recommended)
+```bash
+uv sync --dev                    # Install dependencies
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+```
+
+### Code Quality
+- **Lint check**: `uv run ruff check app/`
+- **Lint fix**: `uv run ruff check --fix app/`
+- **Format code**: `uv run ruff format app/`
+
 ### Cloud Run Deployment
 - **Deploy to Cloud Run**: `./deploy.sh [PROJECT_ID] [REGION] [SERVICE_NAME]`
 - **Default deploy**: `./deploy.sh` (uses default project settings)
