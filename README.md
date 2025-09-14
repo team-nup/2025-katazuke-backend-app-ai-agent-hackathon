@@ -13,6 +13,8 @@ Employment Development Department backend resource for hackathon 2025 - A FastAP
 - **ヘルスチェック**: Kubernetesスタイルの liveness/readiness プローブ
 - **Cloud Run最適化**: コンテナ化とCloud Runでの実行に最適化
 - **セキュリティ**: 非rootユーザーでの実行とマルチステージDockerビルド
+- **Vision API**: Google Cloud Vision APIによる画像解析（Web Detection）
+- **Gemini API**: Gemini 2.5 Proによるマルチモーダル画像分析
 
 ## 📁 プロジェクト構造
 
@@ -24,11 +26,14 @@ Employment Development Department backend resource for hackathon 2025 - A FastAP
 │   ├── api/
 │   │   └── routers/
 │   │       ├── health.py    # ヘルスチェックエンドポイント
-│   │       └── vision.py    # Vision APIエンドポイント
+│   │       ├── vision.py    # Vision APIエンドポイント
+│   │       └── gemini.py    # Gemini APIエンドポイント
 │   ├── services/
-│   │   └── vision_service.py # Vision APIビジネスロジック
+│   │   ├── vision_service.py # Vision APIビジネスロジック
+│   │   └── gemini_service.py # Gemini APIビジネスロジック
 │   └── models/
-│       └── vision.py        # データモデル
+│       ├── vision.py        # Vision APIデータモデル
+│       └── gemini.py        # Gemini APIデータモデル
 ├── requirements.txt         # Python依存関係
 ├── Dockerfile              # コンテナイメージ定義
 ├── .dockerignore           # Docker無視ファイル
@@ -121,19 +126,19 @@ cp .env.example .env
 
 ### 環境変数
 
-Cloud Runでは以下の環境変数が設定されます：
+必要な環境変数：
 
-- `PORT`: Cloud Runが自動設定（通常8080）
-- `PYTHON_VERSION`: Python バージョン情報
+- `GOOGLE_CLOUD_PROJECT`: Google CloudプロジェクトID
+- `VERTEX_AI_LOCATION`: Vertex AIのリージョン
 
 ## 🧪 テスト
 
 ```bash
-# 手動でcurlを使用
-curl http://localhost:8080/api/v1/health/
-
-# デプロイ後のテスト
+# ヘルスチェック
 curl https://YOUR-SERVICE-URL/api/v1/health/
+
+# APIドキュメント
+https://YOUR-SERVICE-URL/docs
 ```
 
 ## 📚 開発ガイド
